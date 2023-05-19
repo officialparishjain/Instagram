@@ -11,52 +11,57 @@ The following functions are used in the data flow of this project:
 
 # Mappings
 
-The following are the mappings available in the Instagram Application controller:
+**InstaUserController:**
 
-**CREATE POST:**
+POST /insta/signup: Sign up a user to Instagram.
+GET /insta/signin: Sign in a user to Instagram.
+DELETE /insta/signout/{email}: Sign out a user from Instagram.
+POST /insta/follow/{email}/{token}/{otherId}: Follow a user.
+POST /insta/like/{email}/{token}: Like a post.
 
-  HTTP Method: POST
-  URL: /posts
-  Request Body: InstaPost object
-  Response: ResponseEntity<InstaPost>
 
-**GET ALL POSTS:**
+**InstaAdminController:**
 
-  HTTP Method: GET
-  URL: /posts/all/{email}/{token}
-  Path Variables: email and token
-  Response: ResponseEntity<List<InstaPost>>
-  
-**INSTA USER SIGN UP:**
+POST /admin/add: Register an admin.
+PUT /admin/user/{id}/{blueTick}: Toggle blue tick for a user.
 
-  HTTP Method: POST
-  URL: /signup
-  Request Body: SignUpInput object
-  Response: ResponseEntity<SignUpOutput>
-  
-**INSTA USER SIGN IN:**
+**InstaPostController:**
 
-  HTTP Method: POST
-  URL: /signin
-  Request Body: SignInInput object
-  Response: ResponseEntity<SignInOutput>
-  
-**UPDATE USER DETAIL:**
+POST /post/add: Add a new post.
+GET /post/posts/all/{email}/{token}: Get all posts.
 
-  HTTP Method: PUT
-  URL: /update/mobile/{mobile}/{email}/{token}
-  Path Variables: mobile, email, and token
-  Response: ResponseEntity<String>
 
 ## Models
 
-The InstaPost class represents a post in an Instagram-like application. It contains fields for the post ID, creation and update timestamps, and the post data. Additionally, it has a Many-to-One relationship with InstaUser class, which represents the user who created the post.
 
-The InstaUser class represents a user in the application. It contains fields for user ID, first name, last name, age, email, phone number, and password.
+InstaUser:
 
-The AuthenticationToken class represents an authentication token used to authenticate users in the application. It contains fields for the token ID, token value, and creation date. Additionally, it has a One-to-One relationship with InstaUser class, indicating that each token can be associated with only one user.
+Attributes: userFirstName, userLastName, userDob, userEmail, userPhoneNumber, userPassword, username, userBio.
+Represents a user in the Instagram application.
+InstaPostLike:
 
-Overall, these classes represent a simple data model for an Instagram-like application with basic user authentication functionality.
+Attributes: likeId, instaPost, instaUser.
+Represents a like given by a user on a post in Instagram.
+InstaPost:
+
+Attributes: postId, postDate, postData, postCaption, instaUser.
+Represents a post made by a user in Instagram.
+InstaFollowing:
+
+Attributes: followingTableId, user, following.
+Represents a following relationship between two users in Instagram.
+InstaFollower:
+
+Attributes: followerTableId, user, follower.
+Represents a follower relationship between two users in Instagram.
+InstaAdmin:
+
+Attributes: adminId, adminFirstName, adminLastName, adminEmail.
+Represents an administrator in the Instagram application.
+AuthenticationToken:
+
+Attributes: authTokenId, authToken, authTokenDate, authInstaUser.
+Represents an authentication token associated with a user in Instagram..
 
 
 ## Controller
